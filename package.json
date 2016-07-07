@@ -1,21 +1,29 @@
 {
-  "version": "0.0.1",
-  "name": "@devteam/confirm-message-directive",
-  "author": "Dev Team Inc. <contact@dev-team.com> (http://dev-team.com)",
-  "description": "AngularJS confirm message directive",
-  "main": "./index.js",
-  "keywords": [
-    "angualrJS",
-    "confirm",
-    "message",
-    "directive"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DevTeamHub/confirm-message-directive.git"
-  },
-  "bugs": {
-    "url": "https://github.com/DevTeamHub/confirm-message-directive/issues"
-  },
-  "homepage": "https://github.com/DevTeamHub/confirm-message-directive#readme"
+    "version": "0.0.1",
+    "name": "@devteam/confirm-message-directive",
+    "author": "Dev Team Inc. <contact@dev-team.com> (http://dev-team.com)",
+    "description": "AngularJS confirm message directive",
+    "main": "./index.js",
+    "devDependencies": {
+        "gulp": "3.9.0",
+        "gulp-concat": "2.6.0",
+        "gulp-rename": "1.2.2",
+        "gulp-sourcemaps": "1.6.0",
+        "gulp-uglify": "1.5.3",
+        "rimraf": "2.5.3"
+    },
+    "keywords": [
+        "angualrJS",
+        "confirm",
+        "message",
+        "directive"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DevTeamHub/confirm-message-directive.git"
+    },
+    "bugs": {
+        "url": "https://github.com/DevTeamHub/confirm-message-directive/issues"
+    },
+    "homepage": "https://github.com/DevTeamHub/confirm-message-directive#readme"
 }
