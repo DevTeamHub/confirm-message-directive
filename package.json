@@ -1,6 +1,6 @@
 {
   "version": "0.0.0",
-  "name": "@dev-team/confirm-message-directive",
+  "name": "@devteam/confirm-message-directive",
   "author": "Dev Team Inc. <contact@dev-team.com> (http://dev-team.com)",
   "description": "AngularJS confirm message directive",
   "main": "./index.js",
