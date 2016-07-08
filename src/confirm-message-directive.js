@@ -1,7 +1,8 @@
-/*!
- * dev-team-confirm-message
- * http://github.com
- * Version: 0.0.1
+ /**
+ * Confirm Message Directvie
+ * https://github.com/DevTeamHub/confirm-message-directive
+ * (c) 2016 Dev Team Inc. http://dev-team.com
+ * License: MIT
  */
 
 var confirmMessageModule = angular.module('dev-team-confirm-message', []);
