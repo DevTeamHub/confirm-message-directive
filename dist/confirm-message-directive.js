@@ -1,5 +1,5 @@
  /**
- * Confirm Message Directvie
+ * Confirm Message Directive
  * https://github.com/DevTeamHub/confirm-message-directive
  * (c) 2016 Dev Team Inc. http://dev-team.com
  * License: MIT
