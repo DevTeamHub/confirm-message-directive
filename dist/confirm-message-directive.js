@@ -1,5 +1,5 @@
- /**
- * Confirm Message Directive
+/**
+ * Confirm Message Directvie
  * https://github.com/DevTeamHub/confirm-message-directive
  * (c) 2016 Dev Team Inc. http://dev-team.com
  * License: MIT
@@ -8,7 +8,7 @@
 var confirmMessageModule = angular.module('dev-team-confirm-message', []);
 
 confirmMessageModule.directive('dtConfirmMessage', dtConfirmMessageDirective)
-                    .directive('dtConfirmLink', dtConfirmLinkDirective);
+    .directive('dtConfirmLink', dtConfirmLinkDirective);
 
 function dtConfirmMessageDirective() {
     return {
@@ -40,14 +40,22 @@ function dtConfirmMessageDirective() {
 
 function dtConfirmMessageController($scope) {
     this.cancel = function () {
-        $scope.addMode = false;
+        this.closeAfterPromise($scope.cancelAction());
     };
 
     this.confirm = function () {
-        return $scope.confirmAction().then(function(){
-            $scope.addMode = false;
-        });
+        this.closeAfterPromise($scope.confirmAction());
     };
+
+    this.closeAfterPromise = function(promise) {
+        if (promise) {
+            promise.then(function() {
+                $scope.addMode = false;
+            });
+        } else {
+            $scope.addMode = false;
+        }
+    }
 }
 
 function dtConfirmLinkDirective() {
@@ -78,5 +86,5 @@ function dtConfirmLinkController($scope, $rootScope) {
 
 angular.module("dev-team-confirm-message").run(["$templateCache", function ($templateCache) {
     $templateCache.put("dt-confirm-message.tmpl.html",
-    "<div class=\"fade\" ng-class=\"{modal: addMode, in: addMode}\" tabindex=\"-1\" ng-style=\"addMode && {'display': 'block'} || {'display': 'none'}\"><div class=\"modal-dialog modal-dialog-center\"><div class=\"modal-content\"><div class=\"modal-header message-header\"><h4 class=\"modal-title text-center\">{{message}}<\/h4><\/div><div class=\"modal-footer message-footer\"><button type=\"button\" class=\"btn btn-success\" ng-click=\"ctrl.confirm()\">Ok<\/button><button type=\"button\" class=\"btn btn-danger\" ng-click=\"ctrl.cancel()\">Cancel<\/button><\/div><\/div><\/div><\/div>");
+        "<div class=\"fade\" ng-class=\"{modal: addMode, in: addMode}\" tabindex=\"-1\" ng-style=\"addMode && {'display': 'block'} || {'display': 'none'}\"><div class=\"modal-dialog modal-dialog-center\"><div class=\"modal-content\"><div class=\"modal-header message-header\"><h4 class=\"modal-title text-center\">{{message}}<\/h4><\/div><div class=\"modal-footer message-footer\"><button type=\"button\" class=\"btn btn-success\" ng-click=\"ctrl.confirm()\">Ok<\/button><button type=\"button\" class=\"btn btn-danger\" ng-click=\"ctrl.cancel()\">Cancel<\/button><\/div><\/div><\/div><\/div>");
 }]);
