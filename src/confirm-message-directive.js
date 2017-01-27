@@ -8,7 +8,7 @@
 var confirmMessageModule = angular.module('dev-team-confirm-message', []);
 
 confirmMessageModule.directive('dtConfirmMessage', dtConfirmMessageDirective)
-    .directive('dtConfirmLink', dtConfirmLinkDirective);
+                    .directive('dtConfirmLink', dtConfirmLinkDirective);
 
 function dtConfirmMessageDirective() {
     return {
@@ -16,13 +16,12 @@ function dtConfirmMessageDirective() {
         restrict: "E",
         replace: true,
         templateUrl: templateSelector,
-        controller: ['$scope', dtConfirmMessageController],
+        controller: ['$scope', '$rootScope', dtConfirmMessageController],
         controllerAs: "ctrl",
         link: function ($scope) {
             $scope.$on("DtConfirmMessageShow", function (event, data) {
                 $scope.message = data.message;
                 $scope.note = data.note;
-                $scope.isSuccess = data.isSuccess;
                 $scope.confirmAction = data.confirmAction;
                 $scope.cancelAction = data.cancelAction;
                 $scope.addMode = true;
@@ -38,7 +37,7 @@ function dtConfirmMessageDirective() {
     }
 }
 
-function dtConfirmMessageController($scope) {
+function dtConfirmMessageController($scope, $rootScope) {
     this.cancel = function () {
         this.closeAfterPromise($scope.cancelAction());
     };
@@ -48,12 +47,14 @@ function dtConfirmMessageController($scope) {
     };
 
     this.closeAfterPromise = function(promise) {
-        if (promise) {
+        if (promise && promise.then) {
             promise.then(function() {
                 $scope.addMode = false;
+                $rootScope.$broadcast("DtConfirmMessageClosed");
             });
         } else {
             $scope.addMode = false;
+            $rootScope.$broadcast("DtConfirmMessageClosed");
         }
     }
 }
@@ -65,26 +66,45 @@ function dtConfirmLinkDirective() {
             message: "@",
             note: "@",
             confirmAction: "&",
-            cancelAction: "&",
-            isSuccess: "@"
+            cancelAction: "&"
         },
         restrict: "E",
         replace: true,
         controller: ['$scope', '$rootScope', dtConfirmLinkController],
         controllerAs: "ctrl",
-        template: '<button ng-click="ctrl.open()">{{text}}</button>'
+        template: '<button ng-show="showButton" ng-click="ctrl.open()">{{text}}</button>'
     }
 }
 
 function dtConfirmLinkController($scope, $rootScope) {
+    $scope.showButton = true;
+
     this.open = function () {
+        $scope.showButton = false;
         $rootScope.$broadcast("DtConfirmMessageShow", $scope);
-    }
+    };
+
+    $scope.$on('DtConfirmMessageClosed', function() {
+        $scope.showButton = true;
+    });
 }
-
-
 
 angular.module("dev-team-confirm-message").run(["$templateCache", function ($templateCache) {
     $templateCache.put("dt-confirm-message.tmpl.html",
-        "<div class=\"fade\" ng-class=\"{modal: addMode, in: addMode}\" tabindex=\"-1\" ng-style=\"addMode && {'display': 'block'} || {'display': 'none'}\"><div class=\"modal-dialog modal-dialog-center\"><div class=\"modal-content\"><div class=\"modal-header message-header\"><h4 class=\"modal-title text-center\">{{message}}<\/h4><\/div><div class=\"modal-footer message-footer\"><button type=\"button\" class=\"btn btn-success\" ng-click=\"ctrl.confirm()\">Ok<\/button><button type=\"button\" class=\"btn btn-danger\" ng-click=\"ctrl.cancel()\">Cancel<\/button><\/div><\/div><\/div><\/div>");
+        "<div class=\"fade\" ng-class=\"{modal: addMode, in: addMode}\" tabindex=\"-1\" ng-style=\"addMode && {'display': 'block'} || {'display': 'none'}\">" +
+            "<div class=\"modal-dialog modal-dialog-center\">" +
+                "<div class=\"modal-content\">" +
+                    "<div class=\"modal-header message-header\">" +
+                        "<h4 class=\"modal-title text-center\">{{message}}<\/h4>" +
+                    "<\/div>" +
+                    "<div ng-if=\"note\" class=\"modal-body message-body\">" +
+                        "<p>{{note}}<\/p>" +
+                    "<\/div>" +
+                    "<div class=\"modal-footer message-footer\">" +
+                        "<button type=\"button\" class=\"btn btn-success\" ng-click=\"ctrl.confirm()\">Ok<\/button>" +
+                        "<button type=\"button\" class=\"btn btn-danger\" ng-click=\"ctrl.cancel()\">Cancel<\/button>" +
+                    "<\/div>" +
+                "<\/div>" +
+            "<\/div>" +
+        "<\/div>");
 }]);

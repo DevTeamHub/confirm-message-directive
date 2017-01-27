@@ -2,6 +2,14 @@
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](http://opensource.org/licenses/MIT)
 
+## Useful links
+
+- [Confluence doc](http://confluence.dev-team.com/display/DOC/Confirm+Message+Directive)
+- [NPM](https://www.npmjs.com/package/confirm-message-directive)
+
+## Requirements
+- Bootstrap css included to your index.html
+
 ## Installation Methods
 
 ### npm
@@ -33,8 +41,9 @@ angular.module('app', [require('dev-team-confirm-message'), ....])
 ### In HTML:
 ```
 <dt-confirm-message></dt-confirm-message>
-<dt-confirm-link text="textOnTheButton"
-                 message="messageThatWillBeDisplayed"
+<dt-confirm-link text="Click me!"
+                 message="Message"
+                 note="Some info note"
                  confirm-action="confirm()"
                  cancel-action="cancel()">
 </dt-confirm-link>
@@ -44,13 +53,12 @@ angular.module('app', [require('dev-team-confirm-message'), ....])
 ### Supported attributes
 - `text`: Text that will be displayed on the button
 - `message`: Message that will be displayed on the shown element
+- `note`: Text that will be displayed in body of confirm message
 - `confirm-action`: Function that will be invoked on confirm click. Can be async
 - `cancel-action`: Function that will be invoked on cancel click. Can be async
 
 ## Feedback
-
 Please [leave your feedback](https://github.com/DevTeamHub/confirm-message-directive/issues) if you have noticed any issues or have a feature request.
 
 ## License
-
 The repository code is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
